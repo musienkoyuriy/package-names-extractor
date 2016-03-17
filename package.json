@@ -1,6 +1,6 @@
 {
   "name": "package-names-extractor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The simple tool for fetching names of used node modules and writing them into package.json if it's necessary.",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/musienkoyuriy/package-names-extractor.git"
+  },
+  "bin": {
+    "package-extract": "index.js"
   },
   "keywords": [
     "node",
