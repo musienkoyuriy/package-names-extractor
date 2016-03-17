@@ -1,6 +1,7 @@
 #!/usr/bin/node
 
-;(function() {
+;
+(function() {
   'use strict'
 
   var fs = require('fs')
@@ -11,35 +12,35 @@
 
   fs.lstat(modulesFolder, function(err, stats) {
     var modules
-	if (err) throw new Error('There is no "node_modules" directory')
-	if (!stats.isDirectory()) return false
-	fs.readdir(modulesFolder, function(err, files) {
-    if (err) throw err
+    if (err) throw new Error('There is no "node_modules" directory')
+    if (!stats.isDirectory()) return false
+    fs.readdir(modulesFolder, function(err, files) {
+      if (err) throw err
       modules = files
-		.map(function(file) {
-		  if (!isSubFolderIsModule(modulesFolder, file)) return {}
-		    return {
-			  name: file,
-			    version: pullPackageVersion(path.resolve(modulesFolder, file, 'package.json'))
-			}
-	      })
-		  .filter(function(nodeModule) {
-			return Object.keys(nodeModule).length > 0
-		  })
-      })
+        .map(function(file) {
+          if (!isSubFolderIsModule(modulesFolder, file)) return {}
+          return {
+            name: file,
+            version: pullPackageVersion(path.resolve(modulesFolder, file, 'package.json'))
+          }
+        })
+        .filter(function(nodeModule) {
+          return Object.keys(nodeModule).length > 0
+        })
     })
+  })
 
   function pullPackageVersion(modulePath) {
-	var packageContent = fs.readFileSync(modulePath, 'utf-8')
-	return JSON.parse(packageContent).version
+    var packageContent = fs.readFileSync(modulePath, 'utf-8')
+    return JSON.parse(packageContent).version
   }
 
   function isSubFolderIsModule(modulesFolder, file) {
     var normalizedFilePath = path.resolve(modulesFolder, file)
     var filesStat = fs.lstatSync(normalizedFilePath)
 
-	if (!filesStat.isDirectory()) return false
+    if (!filesStat.isDirectory()) return false
 
-	return fs.existsSync(path.join(normalizedFilePath, 'package.json'))
+    return fs.existsSync(path.join(normalizedFilePath, 'package.json'))
   }
 })()
