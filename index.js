@@ -90,7 +90,7 @@
 
     try {
       config = fs.readFileSync(npmConfigPath, 'utf-8')
-      config = JSON.parse(config);
+      config = JSON.parse(config)
     } catch(ex) { }
 
     return typeof config === 'object' ? config : {}
