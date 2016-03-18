@@ -17,18 +17,22 @@
     fs.readdir(modulesFolder, function(err, files) {
       if (err) throw err
       modules = files
-        .map(function(file) {
-          if (!isSubFolderIsModule(modulesFolder, file)) return {}
-          return {
-            name: file,
-            version: pullPackageVersion(path.resolve(modulesFolder, file, 'package.json'))
-          }
-        })
-        .filter(function(nodeModule) {
-          return Object.keys(nodeModule).length > 0
-        })
+        .map(getNodeModules)
+        .filter(getNotEmptyObjects)
     })
   })
+
+  function getNodeModules(file) {
+    if (!isSubFolderIsModule(modulesFolder, file)) return {}
+    return {
+      name: file,
+      version: pullPackageVersion(path.resolve(modulesFolder, file, 'package.json'))
+    }
+  }
+
+  function getNotEmptyObjects(nodeModule) {
+    return Object.keys(nodeModule).length > 0
+  }
 
   function pullPackageVersion(modulePath) {
     var packageContent = fs.readFileSync(modulePath, 'utf-8')
