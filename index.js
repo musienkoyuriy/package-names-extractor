@@ -9,7 +9,7 @@
 
   var projectFolderPath = process.cwd()
   var npmConfig = getNpmConfig(projectFolderPath)
-  var modulesFolder = path.resolve(projectFolderPath, 'dasads')
+  var modulesFolder = path.resolve(projectFolderPath, 'node_modules')
 
   fs.lstat(modulesFolder, function(err, stats) {
     var modules
@@ -21,7 +21,7 @@
         .map(getNodeModules)
         .filter(filterNotEmptyObject)
         .forEach(generateJSON)
-      
+
       writeToNpmConfigFile(npmConfig)
     })
   })

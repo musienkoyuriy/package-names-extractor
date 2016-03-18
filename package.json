@@ -1,5 +1,29 @@
 {
-  "dependencies": {
-    "asd": "1223"
-  }
+  "name": "package-names-extractor",
+  "version": "1.0.0",
+  "description": "The simple tool for fetching names of used node modules and writing them into package.json if it's necessary.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musienkoyuriy/package-names-extractor.git"
+  },
+  "keywords": [
+    "node",
+    "npm",
+    "fs",
+    "node_modules",
+    "package",
+    "extract"
+  ],
+  "author": "Yuriy Musienko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/musienkoyuriy/package-names-extractor/issues"
+  },
+  "homepage": "https://github.com/musienkoyuriy/package-names-extractor#readme"
 }
