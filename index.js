@@ -12,6 +12,7 @@
   var modulesFolder = path.resolve(projectFolderPath, 'dasads')
 
   fs.lstat(modulesFolder, function(err, stats) {
+    var resultConfig = npmConfig
     var modules
     if (err) throw new Error('There is no "node_modules" directory')
     if (!stats.isDirectory()) return false
@@ -23,7 +24,6 @@
         .forEach(function(nodeModule) {
           var deps = getDependenciesFromNpmConfig(npmConfig)
           var dependenciesProp
-          var resultConfig = npmConfig
           if (
             !deps.dependencies[nodeModule.name] &&
             !deps.devDependencies[nodeModule.name]
@@ -38,10 +38,10 @@
                 configurable: true,
                 value: nodeModule.version
               })
-              writeToNpmConfigFile(resultConfig)
             }
     		  }
         })
+        writeToNpmConfigFile(resultConfig)
     })
   })
 
