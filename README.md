@@ -1,3 +1,5 @@
+[![npm version](https://img.shields.io/npm/v/redux-actions.svg?style=flat-square)](https://www.npmjs.com/package/package-names-extractor)
+
 # package-names-extractor
 
 The simple tool for fetching names of used node modules and writing them into package.json if it's necessary.
