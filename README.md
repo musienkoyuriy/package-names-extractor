@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/redux-actions.svg?style=flat-square)](https://www.npmjs.com/package/package-names-extractor)
+[![npm version](https://img.shields.io/npm/v/package-names-extractor.svg?style=flat-square)](https://www.npmjs.com/package/package-names-extractor)
 
 # package-names-extractor
 
