@@ -12,7 +12,6 @@
   var modulesFolder = path.resolve(projectFolderPath, 'dasads')
 
   fs.lstat(modulesFolder, function(err, stats) {
-    var resultConfig = npmConfig
     var modules
     if (err) throw new Error('There is no "node_modules" directory')
     if (!stats.isDirectory()) return false
@@ -21,27 +20,9 @@
       modules = files
         .map(getNodeModules)
         .filter(filterNotEmptyObject)
-        .forEach(function(nodeModule) {
-          var deps = getDependenciesFromNpmConfig(npmConfig)
-          var dependenciesProp
-          if (
-            !deps.dependencies[nodeModule.name] &&
-            !deps.devDependencies[nodeModule.name]
-          ) {
-            if (npmConfig.dependencies) {
-              resultConfig.dependencies[nodeModule.name] = nodeModule.version
-            } else {
-              resultConfig['dependencies'] = {}
-              Object.defineProperty(resultConfig.dependencies, nodeModule.name, {
-                enumerable: true,
-                writable: true,
-                configurable: true,
-                value: nodeModule.version
-              })
-            }
-          }
-        })
-        writeToNpmConfigFile(resultConfig)
+        .forEach(generateJSON)
+      
+      writeToNpmConfigFile(npmConfig)
     })
   })
 
@@ -50,6 +31,27 @@
     return {
       name: file,
       version: pullPackageVersion(path.resolve(modulesFolder, file, 'package.json'))
+    }
+  }
+
+  function generateJSON(nodeModule) {
+    var deps = getDependenciesFromNpmConfig(npmConfig)
+    var dependenciesProp
+    if (
+      !deps.dependencies[nodeModule.name] &&
+      !deps.devDependencies[nodeModule.name]
+    ) {
+      if (npmConfig.dependencies) {
+        npmConfig.dependencies[nodeModule.name] = nodeModule.version
+      } else {
+        npmConfig['dependencies'] = {}
+        Object.defineProperty(npmConfig.dependencies, nodeModule.name, {
+          enumerable: true,
+          writable: true,
+          configurable: true,
+          value: nodeModule.version
+        })
+      }
     }
   }
 
