@@ -39,7 +39,7 @@
                 value: nodeModule.version
               })
             }
-    		  }
+          }
         })
         writeToNpmConfigFile(resultConfig)
     })
