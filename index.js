@@ -98,8 +98,8 @@
 
   function getDependenciesFromNpmConfig(config) {
     return {
-      dependencies: ('dependencies' in config) ? config.dependencies : {},
-      devDependencies: ('devDependencies' in config) ? config.devDependencies : {}
+      dependencies: config.dependencies || {},
+      devDependencies: config.devDependencies || {}
     }
   }
 })(global)
