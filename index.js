@@ -23,7 +23,7 @@
         .forEach(function(nodeModule) {
           var deps = getDependenciesFromNpmConfig(npmConfig)
           var dependenciesProp
-		      var resultConfig = npmConfig
+          var resultConfig = npmConfig
           if (
             !deps.dependencies[nodeModule.name] &&
             !deps.devDependencies[nodeModule.name]
