@@ -26,6 +26,12 @@
     })
   })
 
+ /**
+ * Returns an object related to folder which contains a package.json
+ * @param  {String} file
+ * @returns {Object}
+ */
+
   function getNodeModules(file) {
     if (!isSubFolderIsModule(modulesFolder, file)) return {}
     return {
@@ -33,6 +39,12 @@
       version: pullPackageVersion(path.resolve(modulesFolder, file, 'package.json'))
     }
   }
+
+/**
+ * Generates json for package.json dependencies
+ * @param  {Object} nodeModule
+ * @returns undefined
+ */
 
   function generateJSON(nodeModule) {
     var deps = getDependenciesFromNpmConfig(npmConfig)
@@ -55,15 +67,34 @@
     }
   }
 
+/**
+ * Returns boolean as per not-empty object
+ * @param  {Object} nodeModule
+ * @return {Boolean}
+ */
+
   function filterNotEmptyObject(nodeModule) {
     if (typeof nodeModule !== 'object') return
     return Object.keys(nodeModule).length > 0
   }
 
+/**
+ * Gets a package's version
+ * @param  {String} modulePath
+ * @returns {Object}
+ */
+
   function pullPackageVersion(modulePath) {
     var packageContent = fs.readFileSync(modulePath, 'utf-8')
     return JSON.parse(packageContent).version
   }
+
+/**
+ * Returns true if file is module and false if not
+ * @param  {String}  modulesFolder
+ * @param  {String}  file
+ * @returns {Boolean}
+ */
 
   function isSubFolderIsModule(modulesFolder, file) {
     var normalizedFilePath = path.resolve(modulesFolder, file)
@@ -74,12 +105,24 @@
     return fs.existsSync(path.join(normalizedFilePath, 'package.json'))
   }
 
+/**
+ * Writes dependencies to the npm config of project that uses this util
+ * @param  {Object} npmConfig
+ * @returns undefined
+ */
+
   function writeToNpmConfigFile(npmConfig) {
     fs.writeFile(path.resolve(projectFolderPath, 'package.json'), JSON.stringify(npmConfig, null, 2), function(err, content) {
       if (err) throw err
       console.log('package.json has been updated')
     })
   }
+
+/**
+ * Gets content of package.json file
+ * @param  {String} projectFolderPath
+ * @returns {Object}
+ */
 
   function getNpmConfig(projectFolderPath) {
     var npmConfigPath = path.join(projectFolderPath, 'package.json')
@@ -95,6 +138,12 @@
 
     return typeof config === 'object' ? config : {}
   }
+
+/**
+ * Gets object which dependencies and devDependencies
+ * @param  {String} config
+ * @returns undefined
+ */
 
   function getDependenciesFromNpmConfig(config) {
     return {
