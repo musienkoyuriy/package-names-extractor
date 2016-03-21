@@ -70,7 +70,7 @@
 /**
  * Returns boolean as per not-empty object
  * @param  {Object} nodeModule
- * @return {Boolean}
+ * @returns {Boolean}
  */
 
   function filterNotEmptyObject(nodeModule) {
